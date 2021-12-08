@@ -1,0 +1,150 @@
+@import './default.css';
+
+
+body{
+    background-color: var(--bg-color);
+}
+
+header{
+    height: 60px;
+    background-color: var(--primary-color);
+    box-shadow: 0px 0px 4px #444;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.menu-right-side{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo h1{
+    font-size: 24px;
+    color: var(--black-color);
+}
+
+.search-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #D9435F;
+    border-radius: 5px;
+    height: 25px;
+    width: 200px;
+}
+
+.search-box input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 5px;
+    width: 100%;
+}
+
+.search-box input::placeholder{
+    color: #aaa;
+}
+
+.search-box i{
+    margin-right: 5px;
+    width: 16px;
+    cursor: pointer;
+    color: var(--black-color);
+    display: none;
+}
+
+.search-icon i{
+    width: 16px;
+    color: var(--primary-color);
+    display: block;
+}
+
+
+.search-icon{
+    height: 100%;
+    background-color: #ccc;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+}
+
+i.menu-mobile{
+    display: none;
+    color: #fff;
+}
+
+.menu-profile{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.menu-profile img{
+    width: 32px;
+    height: 32px;
+    border-radius:50%;
+}
+
+.menu-profile span{
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--black-color);
+}
+
+.menu-profile i{
+    color: var(--black-color);
+    transform: rotate(-90deg);
+    transition: 0.2s;
+}
+
+.menu-profile:hover i{
+    transform: rotate(0deg);
+}
+
+@media (max-width: 760px){
+    header{
+        padding: 0 2%;
+    }
+    .menu-right-side{
+        width: 100%;
+        gap: 0px;
+        justify-content: space-between;
+    }
+    
+    .logo h1{
+       font-size: 22px;
+    }
+
+    .menu-wrapper{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        
+    }
+
+    i.menu-mobile{
+        display: block;
+        color: #fff;
+        transform: rotate(0deg);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    i.menu-mobile:hover{
+        transform: rotate(90deg);
+    }
+
+    .menu-left-side{
+        display: none;
+    }
+
+    
+}
