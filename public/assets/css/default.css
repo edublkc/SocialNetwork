@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+}
+
+:root{
+    --main-gradient: linear-gradient(rgb(95,40,107),rgb(45,27,43));
+    --black-color: #282940;
+    --primary-color: #F24B6A;
+    --secundary-color: #A62479;
+}

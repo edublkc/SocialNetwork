@@ -1,0 +1,100 @@
+@import './default.css';
+
+section{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-side{
+    background-image: url(../images/bg-login.jpg);
+    background-position: center;
+    background-size: cover;
+    flex: 1;
+    height: 100%;
+}
+
+.right-side{
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.title{
+    width: fit-content;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.title h1{
+    color: var(--black-color);
+}
+
+.form-item{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-item label{
+    color: #bbb;
+    font-weight:normal;
+
+}
+
+.form-item input{
+    border: 1px solid #bbb;
+    color: #000;
+    outline: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 250px;
+    height: 35px;
+}
+
+.box button{
+    background-color: var(--primary-color);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 250px;
+    height: 35px;
+    transition: 0.4s;
+}
+
+.box button:hover{
+    background-color: var(--secundary-color);
+}
+
+
+@media (max-width:740px){
+    .left-side{
+        display: none;
+    }
+
+    .right-side{
+        background-image: url(../images/bg-login.jpg);
+        background-position: center;
+        background-size: cover;
+    }
+
+    .box{
+        background-color: #fff;
+        box-shadow: 0px 0px 4px #444;
+        padding: 20px;
+        border-radius: 10px;
+    }
+}
