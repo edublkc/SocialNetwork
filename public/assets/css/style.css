@@ -44,7 +44,7 @@ header{
 
 .search-box.focus{
     width: 400px;
-    background-color: #fff;
+    background-color: var(--white-color);
 }
 
 
@@ -89,7 +89,7 @@ header{
 
 i.menu-mobile{
     display: none;
-    color: #fff;
+    color: var(--white-color);
 }
 
 .menu-profile{
@@ -144,7 +144,7 @@ i.menu-mobile{
 
     i.menu-mobile{
         display: block;
-        color: #fff;
+        color: var(--white-color);
         transform: rotate(0deg);
         transition: 0.3s;
         cursor: pointer;
@@ -157,6 +157,97 @@ i.menu-mobile{
     .menu-left-side{
         display: none;
     }
-
-    
 }
+
+main{
+    display: flex;
+    padding: 50px 5%;
+}
+
+/*LEFT SIDE*/
+.main-left-side{
+    background-color: var(--white-color);
+}
+
+.profile-infos{
+    width: 250px;
+    border: 1px solid #ccc;
+}
+
+.profile-cover{
+    background-color: var(--primary-color);
+    height: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.profile-pic--circle{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: -30px;
+    width: 94px;
+    height: 94px;
+    border-radius: 50%;
+    background-color: var(--white-color);
+    cursor: pointer;
+}
+
+.profile-pic--circle img{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+
+.profile-about{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+
+.profile-about span{
+    color: #aaa;
+}
+
+.profile-about .profile-name{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.profile-follow{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    gap: 10px;
+    margin: 20px 0;
+
+}
+
+.profile-follow{
+    font-weight: bold;
+    color: #444;
+}
+
+.view-my-profile{
+    margin: 20px 0;
+    text-align: center;
+}
+
+.view-my-profile a{
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+
+/*POST AREA*/

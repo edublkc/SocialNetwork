@@ -11,4 +11,11 @@
     --primary-color: #F24B6A;
     --secundary-color: #A62479;
     --bg-color: #F0F2F5;
+    --white-color: #ffffff;
+}
+
+.line{
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
 }
