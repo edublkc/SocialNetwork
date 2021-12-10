@@ -1,5 +1,5 @@
 @import './default.css';
-
+@import './feed-item.css';
 
 body{
     background-color: var(--bg-color);
@@ -161,7 +161,9 @@ i.menu-mobile{
 
 main{
     display: flex;
+    align-items: flex-start;
     padding: 50px 5%;
+    gap: 30px;
 }
 
 /*LEFT SIDE*/
@@ -171,7 +173,7 @@ main{
 
 .profile-infos{
     width: 250px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
 }
 
 .profile-cover{
