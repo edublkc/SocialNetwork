@@ -1,11 +1,11 @@
 @import './default.css';
 @import './feed-item.css';
 
-body{
+body {
     background-color: var(--bg-color);
 }
 
-header{
+header {
     height: 60px;
     background-color: var(--primary-color);
     box-shadow: 0px 0px 4px #444;
@@ -15,15 +15,15 @@ header{
     padding: 0 5%;
 }
 
-.menu-right-side{
+.menu-right-side {
     display: flex;
     align-items: center;
     gap: 30px;
 }
 
-.logo h1{
+.logo h1 {
     font-size: 24px;
-    
+
 }
 
 .logo h1 a {
@@ -31,7 +31,7 @@ header{
     color: var(--black-color);
 }
 
-.search-box{
+.search-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -42,13 +42,13 @@ header{
     transition: 0.2s;
 }
 
-.search-box.focus{
+.search-box.focus {
     width: 400px;
     background-color: var(--white-color);
 }
 
 
-.search-box input{
+.search-box input {
     background-color: transparent;
     border: none;
     outline: none;
@@ -56,11 +56,11 @@ header{
     width: 100%;
 }
 
-.search-box input::placeholder{
+.search-box input::placeholder {
     color: #aaa;
 }
 
-.search-box i{
+.search-box i {
     margin-right: 5px;
     width: 16px;
     cursor: pointer;
@@ -68,14 +68,14 @@ header{
     display: none;
 }
 
-.search-icon i{
+.search-icon i {
     width: 16px;
     color: var(--primary-color);
     display: block;
 }
 
 
-.search-icon{
+.search-icon {
     height: 100%;
     background-color: #ccc;
     width: 40px;
@@ -87,62 +87,63 @@ header{
     cursor: pointer;
 }
 
-i.menu-mobile{
+i.menu-mobile {
     display: none;
     color: var(--white-color);
 }
 
-.menu-profile{
+.menu-profile {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
 }
 
-.menu-profile img{
+.menu-profile img {
     width: 32px;
     height: 32px;
-    border-radius:50%;
+    border-radius: 50%;
 }
 
-.menu-profile span{
+.menu-profile span {
     font-weight: bold;
     font-size: 14px;
     color: var(--black-color);
 }
 
-.menu-profile i{
+.menu-profile i {
     color: var(--black-color);
     transform: rotate(-90deg);
     transition: 0.2s;
 }
 
-.menu-profile:hover i{
+.menu-profile:hover i {
     transform: rotate(0deg);
 }
 
-@media (max-width: 760px){
-    header{
+@media (max-width: 760px) {
+    header {
         padding: 0 2%;
     }
-    .menu-right-side{
+
+    .menu-right-side {
         width: 100%;
         gap: 0px;
         justify-content: space-between;
     }
-    
-    .logo h1{
-       font-size: 22px;
+
+    .logo h1 {
+        font-size: 22px;
     }
 
-    .menu-wrapper{
+    .menu-wrapper {
         display: flex;
         align-items: center;
         gap: 15px;
-        
+
     }
 
-    i.menu-mobile{
+    i.menu-mobile {
         display: block;
         color: var(--white-color);
         transform: rotate(0deg);
@@ -150,33 +151,43 @@ i.menu-mobile{
         cursor: pointer;
     }
 
-    i.menu-mobile:hover{
+    i.menu-mobile:hover {
         transform: rotate(90deg);
     }
 
-    .menu-left-side{
+    .menu-left-side {
         display: none;
     }
 }
 
-main{
+main {
     display: flex;
     align-items: flex-start;
     padding: 50px 5%;
     gap: 30px;
 }
 
-/*LEFT SIDE*/
-.main-left-side{
-    background-color: var(--white-color);
+@media (max-width: 760px) {
+    main {
+        padding: 20px 2%;
+    }
 }
 
-.profile-infos{
-    width: 250px;
+/*LEFT SIDE*/
+.main-left-side {
+    background-color: var(--white-color);
+    flex: 1;
+    width: 100%;
+    max-width: 250px;
+}
+
+.profile-infos {
+    width: 100%;
+    max-width: 250px;
     border: 1px solid var(--border-color);
 }
 
-.profile-cover{
+.profile-cover {
     background-color: var(--primary-color);
     height: 100px;
     position: relative;
@@ -186,7 +197,7 @@ main{
     cursor: pointer;
 }
 
-.profile-pic--circle{
+.profile-pic--circle {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -199,13 +210,13 @@ main{
     cursor: pointer;
 }
 
-.profile-pic--circle img{
+.profile-pic--circle img {
     width: 90px;
     height: 90px;
     border-radius: 50%;
 }
 
-.profile-about{
+.profile-about {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -214,18 +225,18 @@ main{
 }
 
 
-.profile-about span{
+.profile-about span {
     color: #aaa;
 }
 
-.profile-about .profile-name{
+.profile-about .profile-name {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
     color: black;
 }
 
-.profile-follow{
+.profile-follow {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -235,21 +246,34 @@ main{
 
 }
 
-.profile-follow{
+.profile-follow {
     font-weight: bold;
     color: #444;
 }
 
-.view-my-profile{
+.view-my-profile {
     margin: 20px 0;
     text-align: center;
 }
 
-.view-my-profile a{
+.view-my-profile a {
     font-weight: bold;
     text-decoration: none;
     color: var(--primary-color);
 }
 
+@media (max-width: 760px) {
+    .main-left-side {
+        display: none;
+    }
+}
 
 /*POST AREA*/
+
+.main-feed-area {
+    flex: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
