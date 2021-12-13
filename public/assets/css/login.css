@@ -17,6 +17,7 @@ section{
     align-items: center;
     flex: 1;
     height: 100%;
+    clip-path: circle(70% at 20% 50%);
 }
 
 .left-side img{
@@ -40,6 +41,11 @@ section{
 .title{
     width: fit-content;
     border-bottom: 3px solid var(--primary-color);
+}
+
+#message-info{
+    color: red;
+    display: none;
 }
 
 .title h1{
@@ -68,23 +74,20 @@ section{
     height: 35px;
 }
 
-.box button{
-    background-color: var(--primary-color);
-    border: none;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 20px;
-    border-radius: 20px;
-    padding: 5px 10px;
-    width: 250px;
-    height: 35px;
-    transition: 0.4s;
+.form-item.register{
+    margin-bottom: 10px;
 }
 
-.box button:hover{
-    background-color: var(--secundary-color);
+.form-item.erro input{
+    border: 2px solid red;
 }
+
+
+#register-modal:checked .modal{
+    opacity: 100%;
+    display: block;
+}
+
 
 
 @media (max-width:740px){

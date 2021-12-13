@@ -26,24 +26,6 @@ searchButtonRemoveAllText.addEventListener('click', () => {
     searchButtonRemoveAllText.style.display = "none"
 })
 
-
-//dropdown profile menu
-/*const dropDownOptions = document.querySelector('.menu-profile--dropdown')
-const profileMoreInformationsButton = document.querySelector('.menu-profile--more')
-
-profileMoreInformationsButton.addEventListener('click',(event)=>{
-    let positionY = profileMoreInformationsButton.getBoundingClientRect().y
-    let positionX = profileMoreInformationsButton.getBoundingClientRect().x
-
-    console.log(profileMoreInformationsButton.getBoundingClientRect().x)
-
-    dropDownOptions.style.top = `${positionY + 20}px`
-    dropDownOptions.style.left = `${positionX + 20}px`
-
-    dropDownOptions.classList.toggle('dropdown');
-})*/
-
-
 //New post click effect
 const newPostInput = document.querySelector('.new-post-input')
 const newPostPlaceholder = document.querySelector('.new-post-placeholder')
