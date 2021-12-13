@@ -34,6 +34,20 @@
     display: none;
 }
 
+.new-post-input::-webkit-scrollbar{
+    width: 5px;
+}
+
+.new-post-input::-webkit-scrollbar-track{
+    background-color: #eee;
+}
+
+.new-post-input::-webkit-scrollbar-thumb{
+    background-color: var(--secundary-color);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
 .new-post-send--button i{
     color: var(--primary-color);
     cursor: pointer;
@@ -197,11 +211,12 @@
     background-color: #eee;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
     .new-post-area{
         width: 100%;
         max-width: 760px;
     }
+
     .feed-area{
         width: 100%;
         max-width: 760px;

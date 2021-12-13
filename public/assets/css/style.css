@@ -15,7 +15,7 @@ header {
     padding: 0 5%;
 }
 
-.menu-right-side {
+.menu-left-side {
     display: flex;
     align-items: center;
     gap: 30px;
@@ -97,6 +97,7 @@ i.menu-mobile {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    position: relative;
 }
 
 .menu-profile img {
@@ -121,43 +122,87 @@ i.menu-mobile {
     transform: rotate(0deg);
 }
 
-@media (max-width: 760px) {
+.menu-profile:hover .menu-profile--dropdown {
+    display: block;
+    top: 80%;
+    left: 40%;
+}
+
+
+.menu-profile--dropdown {
+    position: absolute;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    display: none;
+    transition: 0.2s;
+    width: fit-content;
+}
+
+.menu-profile--dropdown ul li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.menu-profile--dropdown ul li a {
+    text-decoration: none;
+    color: var(--black-color);
+    font-weight: 700;
+}
+
+.menu-profile--dropdown ul li:hover {
+    background-color: #eee;
+}
+
+
+
+@media (max-width: 800px) {
     header {
         padding: 0 2%;
     }
 
-    .menu-right-side {
+    .menu-left-side {
         width: 100%;
+        justify-content: flex-start;
         gap: 0px;
-        justify-content: space-between;
+    }
+
+    .search-box {
+        width: 100%;
+        margin-right: 10px;
+    }
+
+    .search-box.focus {
+        width: 100%;
     }
 
     .logo h1 {
-        font-size: 22px;
+        display: none;
     }
 
     .menu-wrapper {
         display: flex;
         align-items: center;
         gap: 15px;
-
+        width: 100%;
     }
 
-    i.menu-mobile {
-        display: block;
-        color: var(--white-color);
-        transform: rotate(0deg);
-        transition: 0.3s;
-        cursor: pointer;
-    }
-
-    i.menu-mobile:hover {
-        transform: rotate(90deg);
-    }
-
-    .menu-left-side {
+    .menu-profile--more {
         display: none;
     }
+
+    .menu-profile:hover .menu-profile--dropdown {
+        display: block;
+        top: 110%;
+        left: -20%;
+    }
+
+    .menu-profile--dropdown {
+        font-size: 12px;
+        text-align: center;
+    }
+
 }
 
 main {
@@ -167,7 +212,7 @@ main {
     gap: 30px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
     main {
         padding: 20px 2%;
     }
@@ -262,7 +307,7 @@ main {
     color: var(--primary-color);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
     .main-left-side {
         display: none;
     }
