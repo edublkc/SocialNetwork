@@ -1,11 +1,8 @@
 import { renderPosts } from "./index.js";
-import * as effect from "./effects.js"
-
-
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, serverTimestamp,query,orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBA3z6tyOTfwlExomg10Fq9eX95-8TQw10",
@@ -20,6 +17,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
+const allPostsCollection = collection(db, 'posts')
+let posts = []
+
 
 function getUser() {
     onAuthStateChanged(auth, (user) => {
@@ -35,23 +35,18 @@ function getUser() {
 }
 
 
-let posts = []
-const allPostsCollection = collection(db, 'posts')
-
-
-
-
-
 async function readPosts() {
-    const allPosts = await getDocs(allPostsCollection)
+    posts = []
+    document.querySelector('#post-input').textContent = ''
+
+    const myQuery = query(allPostsCollection,orderBy('date','desc'))
+    const allPosts = await getDocs(myQuery)
       allPosts.docs.forEach((post)=>{
           posts.push(post.data())
-          
       })
 
       renderPosts(posts)
 }
-
 
 
 window.onload = () => {
@@ -60,16 +55,22 @@ window.onload = () => {
 }
 
 
-
-
 const logoutButton = document.querySelector('#logout-button')
-const newPostSendButton = document.querySelector('.new-post-pic');
+const newPostSendButton = document.querySelector('#send-new-post');
 
-newPostSendButton.addEventListener('click',function(){
-    alert('pegou')
-})
+newPostSendButton.addEventListener('click',addNewPost)
 
+async function addNewPost(){
+    const newPostInput = document.querySelector('#post-input').textContent.trim()
+    const docRef = await addDoc(allPostsCollection,{
+        text: newPostInput,
+        date: serverTimestamp(),
+        like: 0,
+        comments: ''
+    }) 
 
+    readPosts()
+}
 
 
 logoutButton.addEventListener('click', () => {
@@ -77,6 +78,5 @@ logoutButton.addEventListener('click', () => {
         .then(() => {
             window.location.replace('login.html')
         })
-
 })
 

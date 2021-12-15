@@ -1,10 +1,12 @@
-//import * as effect from "./effects.js"
+import * as effect from "./effects.js"
 
 
 
 export function renderPosts(posts) {
     let feedPostArea = document.querySelector('#feed-area')
     console.log(posts)
+
+    feedPostArea.innerHTML = ''
 
     for(let i = 0; i < posts.length; i++){
         feedPostArea.innerHTML += `
@@ -16,7 +18,7 @@ export function renderPosts(posts) {
                 </div>
                 <div class="feed-area--infos">
                     <a href=""><span class="feed-area--infos__name">Eduardo Mota</span></a>
-                    <span class="feed-area--infos__date">${posts[i].data}</span>
+                    <span class="feed-area--infos__date">${posts[i].date.toDate()}</span>
                 </div>
             </div>
     
