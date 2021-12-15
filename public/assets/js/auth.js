@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, collection, setDoc, doc,serverTimestamp} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -15,7 +16,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-
+const db = getFirestore(app);
+const profileCollection = collection(db, 'profiles')
 
 const loginButton = document.querySelector('#login-bt')
 loginButton.addEventListener('click', login)
@@ -80,20 +82,43 @@ registerButton.addEventListener('click', singUP)
 function singUP() {
     const email = document.querySelector('#register-email').value.trim()
     const password = document.querySelector('#register-password').value.trim()
+    const name = document.querySelector('#register-name').value.trim()
+    const lastName = document.querySelector('#register-lastname').value.trim()
+
+    const allRegisterInputs = document.querySelectorAll('[data-register]')
 
     const emailElement = document.querySelector('#register-email')
     const passwordElement = document.querySelector('#register-password')
     const messageErroInfo = document.querySelector('.message-info-modal')
 
-    if (email == '' || password == '') {
-        emailElement.style.border = "2px solid red"
-        passwordElement.style.border = '2px solid red'
-        messageErroInfo.style.display = "block"
-        messageErroInfo.textContent = "Preencha todos os campos."
+    let inputsFilled = []
+    
+    for(let i = 0; i < allRegisterInputs.length; i++){
+        if(allRegisterInputs[i].value.trim() == ''){
+            allRegisterInputs[i].classList.add('erro')
+            messageErroInfo.style.display = "block"
+            messageErroInfo.textContent = 'Por favor preencha todos os campos!'
+        }else{
+            allRegisterInputs[i].classList.remove('erro')
+            inputsFilled.push('ok')
+        }
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
+    let allInputsAreFilled = inputsFilled.length == allRegisterInputs.length ? true : false
+
+    console.log(allInputsAreFilled)
+
+    if(allInputsAreFilled){
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((data) => {
+            const uid = data.user.uid
+
+            setDoc(doc(db,'profiles',uid),{
+                name,
+                lastName,
+                createAt: serverTimestamp()
+            })
+
             setTimeout(() => {
                 window.location.replace('index.html')
             }, 1000)
@@ -127,6 +152,8 @@ function singUP() {
                     break;
             }
         })
+    }
+   
 
 }
 
