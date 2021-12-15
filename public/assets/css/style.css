@@ -322,3 +322,11 @@ main {
     flex-direction: column;
     gap: 20px;
 }
+
+#main-middle{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    width: 100%;
+    gap: 20px;
+}

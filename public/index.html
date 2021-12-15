@@ -34,14 +34,14 @@
             <div class="menu-profile">
                 <img src="./assets/images/avatar.jpg">
                 <div class="menu-profile--more">
-                    <span>Eduardo Mota</span>
+                    <span id="menu-profile--name">Eduardo Mota</span>
                     <i class="fas fa-caret-down"></i>
                 </div>
 
                 <div class="menu-profile--dropdown">
                     <ul>
                         <li><a href="">Meu Perfil</a></li>
-                        <li><a href="">Sair</a></li>
+                        <li><a id="logout-button" href="">Sair</a></li>
                     </ul>
                 </div>
             </div>
@@ -81,103 +81,29 @@
             </aside>
         </section>
 
-        <section class="main-feed-area">
+        <section id="main-middle">
             <div class="new-post-area">
                 <div class="new-post-pic">
                     <img src="assets/images/avatar.jpg">
                 </div>
-                <div class="new-post-placeholder">O que está pensando?</div>
-                <div class="new-post-input" contenteditable="true">
-                    
-                </div>
-                <div class="new-post-send--button">
-                    <i class="fas fa-paper-plane"></i>
+                <div id="post-placeholder" class="new-post-placeholder">O que está pensando?</div>
+                <div id="post-input" class="new-post-input" contenteditable="true"></div>
+                <!--<input class="new-post-input" type="text" placeholder="O que está pensando?">-->
+                <div id="send-new-post" class="new-post-send--button">
+                    <i  class="fas fa-paper-plane"></i>
                 </div>
             </div>
-
-            <div class="feed-area">
-                <div class="feed-area--header">
-                    <div class="feed-area--header__left-side">
-                        <div class="feed-area--pic">
-                            <img src="./assets/images/avatar.jpg">
-                        </div>
-                        <div class="feed-area--infos">
-                            <a href=""><span class="feed-area--infos__name">Eduardo Mota</span></a>
-                            <span class="feed-area--infos__date">20/12/2021</span>
-                        </div>
-                    </div>
-
-                    <div class="feed-area--header__right-side">
-                        <i class="fas fa-ellipsis-v feed-area--more__button"></i>
-                    </div>
-                </div>
-
-                <div class="feed-area--post">
-                    <p>Pessoal, tudo bem! Busco parceiros para empreender comigo em meu software.</p>
-                    <br>
-                    <p>Acabei de aprová-lo na Appstore. É um sistema de atendimento via WhatsApp multi-atendentes para auxiliar empresas.</p>
-                    <br>
-                    <p>Este sistema permite que vários funcionários/colaboradores da empresa atendam um mesmo número de WhatsApp, mesmo que estejam trabalhando remotamente, sendo que cada um acessa com um login e senha particular..</p>
-                </div>
-
-                <div class="line"></div>
-                    <div class="feed-area--interactions">
-                        <div class="feed-area--stars__button">
-                            <span><i class="far fa-star"></i></span>
-                            <span>10</span>
-                        </div>
-                        <div class="feed-area--comments__button">
-                            <span><i class="far fa-comment-alt"></i></span>
-                            <span>2</span>
-                        </div>
-                    </div>
-                <div class="line"></div>
-
-                <div class="feed-area--all-comments">
-                    <div class="feed-area--comment">
-                        <div class="feed-area--comment__pic">
-                            <img src="./assets/images/avatar.jpg">
-                        </div>
-                        <div class="feed-area--comment__wrap">
-                            <div class="feed-area--comment__user">
-                                <a href=""><span>Eduardo Mota</span></a>
-                            </div>
-                            <div class="feed-area--comment__text">
-                                <p>Comentando no meu próprio post</p>
-                            </div>
-                        </div>
-                    </div>     
-                    
-                    <div class="feed-area--comment">
-                        <div class="feed-area--comment__pic">
-                            <img src="./assets/images/avatar.jpg">
-                        </div>
-                        <div class="feed-area--comment__wrap">
-                            <div class="feed-area--comment__user">
-                                <a href=""><span>Eduardo Mota</span></a>
-                            </div>
-                            <div class="feed-area--comment__text">
-                                <p>Muito legal, parabéns!</p>
-                            </div>
-                        </div>
-                    </div>      
-                </div>
-
-                <div class="feed-area--new-comment">
-                    <div class="feed-area--new-comment__pic">
-                        <img src="./assets/images/avatar.jpg">
-                    </div>
-                    <div class="feed-area--new-coment__input">
-                        <input type="text" placeholder="Escreva um comentário">
-                    </div>
-                </div>
-
-            </div>
-
+            <section id="feed-area" class="main-feed-area">
+                
+    
+            </section>
         </section>
+      
     </main>
 
+    <script type="module" src="./assets/js/script.js"></script>
     <script type="module" src="./assets/js/index.js"></script>
+    
 </body>
 
 </html>

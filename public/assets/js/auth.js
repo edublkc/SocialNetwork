@@ -1,19 +1,5 @@
-const openModalRegister = document.querySelector('#register-bt')
-const modal = document.querySelector('.modal')
-const closeModalButton = document.querySelector('.modal-close-btn')
-
-openModalRegister.addEventListener('click', () => {
-    modal.classList.toggle('openned')
-})
-
-closeModalButton.addEventListener('click', () => {
-    modal.classList.toggle('openned')
-})
-
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 
 const firebaseConfig = {
@@ -28,16 +14,20 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 
 
 const loginButton = document.querySelector('#login-bt')
 loginButton.addEventListener('click', login)
 
 
-const auth = getAuth();
+
 
 function login() {
-
+    if(getAuth().currentUser){
+        signOut(auth)
+    }
+    
     const email = document.querySelector('#email').value.trim()
     const password = document.querySelector('#password').value.trim()
     const emailElement = document.querySelector('#email')
@@ -68,6 +58,11 @@ function login() {
                 case "auth/user-not-found":
                     messageErroInfo.style.display = "block"
                     messageErroInfo.textContent = 'Usuário não encontrado'
+                    break;
+                case 'auth/internal-error':
+                    messageErroInfo.style.display = "block"
+                    passwordElement.style.border = '2px solid red'
+                    messageErroInfo.textContent = "Digite uma senha"
                     break;
                 default:
                     //alert(error.message)
@@ -108,8 +103,28 @@ function singUP() {
             switch(erro.code){
                 case 'auth/weak-password':
                     messageErroInfo.style.display = "block"
+                    passwordElement.style.border = '2px solid red'
                     messageErroInfo.textContent = "Senha muito fraca."
                 break;
+                case 'auth/email-already-in-use':
+                    messageErroInfo.style.display = "block"
+                    emailElement.style.border = "2px solid red"
+                    messageErroInfo.textContent = 'Esse email já está sendo utilizado.'
+                break;
+                case 'auth/internal-error':
+                    messageErroInfo.style.display = "block"
+                    passwordElement.style.border = '2px solid red'
+                    messageErroInfo.textContent = "Digite uma senha"
+                break;
+                case 'auth/invalid-email':
+                    messageErroInfo.style.display = "block"
+                    emailElement.style.border = "2px solid red"
+                    messageErroInfo.textContent = 'Digite um email válido.'
+                break;
+                default:
+                    messageErroInfo.style.display = "block"
+                    messageErroInfo.textContent = erro.message
+                    break;
             }
         })
 
