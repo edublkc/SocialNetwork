@@ -17,7 +17,7 @@ export function renderPosts(posts) {
                     <img src="./assets/images/avatar.jpg">
                 </div>
                 <div class="feed-area--infos">
-                    <a href=""><span class="feed-area--infos__name">Eduardo Mota</span></a>
+                    <a href=""><span class="feed-area--infos__name">${posts[i].owner}</span></a>
                     <span class="feed-area--infos__date">${posts[i].date.toDate()}</span>
                 </div>
             </div>
@@ -74,4 +74,13 @@ export function renderPosts(posts) {
     }
 
 
+}
+
+
+export function renderProfileInfo(currentUserProfile){
+    console.log(currentUserProfile)
+
+    const menuProfileName = document.querySelector('.profile-name')
+
+    menuProfileName.textContent = `${currentUserProfile.name} ${currentUserProfile.lastName}`
 }
