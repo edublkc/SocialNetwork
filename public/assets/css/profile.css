@@ -1,5 +1,10 @@
 @import "./default.css";
 @import "./feed-item.css";
+@import "./login.css";
+
+body{
+    
+}
 
 main{
     display:flex;
@@ -26,7 +31,6 @@ main{
 .profile-header--infos{
     display: flex;
     justify-content: space-between;
-    
     max-width: 850px;
     background-color: var(--white-color);
     border: 1px solid var(--border-color);
@@ -117,8 +121,47 @@ main{
     color: var(--secundary-color);
 }
 
+.profile-body--about__info.edit .profile-edit{
+    background-color: var(--primary-color);
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--white-color);
+}
+
 .profile-body--rightside{
     flex: 2;
+}
+
+.edit-profile-row{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    color: var(--black-color);
+}
+.edit-profile--user__pic{
+    display: flex;
+    justify-content: center;
+}
+
+.edit-profile--user__pic img{
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+}
+
+.edit-profile--user__cover{
+    display: flex;
+    justify-content: center;
+}
+
+.edit-profile--user__cover img{
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 @media (max-width:800px){

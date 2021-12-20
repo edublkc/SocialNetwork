@@ -1,4 +1,4 @@
-import {header} from "./components.js"
+import {header, closeModal} from "./components.js"
 
 header()
 
@@ -82,4 +82,15 @@ logoutButton.addEventListener('click', () => {
         .then(() => {
             window.location.replace('login.html')
         })
+})
+
+
+const editProfileButton = document.querySelector('.profile-edit')
+const modal = document.querySelector('.modal')
+const body = document.querySelector('body')
+
+editProfileButton.addEventListener('click',()=>{
+    modal.classList.add('openned-big')
+    body.style.overflow = "hidden"
+    closeModal()
 })

@@ -50,3 +50,24 @@ export function newPost(){
     })
     
 }
+
+export function closeModal(){
+    const modal = document.querySelector('.modal')
+    const closeModalButton = document.querySelector('.modal-close-btn')
+    const body = document.querySelector('body')
+
+    closeModalButton.addEventListener('click', close)
+    
+
+    function close(){
+        if(modal.classList.contains('openned')){
+            modal.classList.remove('openned')
+            body.style.overflow = "auto"
+        }
+
+        if(modal.classList.contains('openned-big')){
+            modal.classList.remove('openned-big')
+            body.style.overflow = "auto"
+        }
+    }
+}

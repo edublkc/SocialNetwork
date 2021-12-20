@@ -91,6 +91,10 @@ section{
     width: 100%;
 }
 
+.form-item.register input{
+    width: 100%;
+}
+
 .form-item.register .erro{
     border: 2px solid red;
 }
