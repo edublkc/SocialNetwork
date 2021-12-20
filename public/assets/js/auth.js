@@ -80,10 +80,16 @@ const registerButton = document.querySelector('#new-user-button');
 registerButton.addEventListener('click', singUP)
 
 function singUP() {
-    const email = document.querySelector('#register-email').value.trim()
-    const password = document.querySelector('#register-password').value.trim()
     const name = document.querySelector('#register-name').value.trim()
     const lastName = document.querySelector('#register-lastname').value.trim()
+    const birth = document.querySelector('#register-birth').value.trim()
+    const title = document.querySelector('#register-title').value.trim()
+    const state = document.querySelector('#register-state').value.trim()
+    const city = document.querySelector('#register-city').value.trim()
+    const country = document.querySelector('#register-country').value.trim()
+    const email = document.querySelector('#register-email').value.trim()
+    const password = document.querySelector('#register-password').value.trim()
+   
 
     const allRegisterInputs = document.querySelectorAll('[data-register]')
 
@@ -116,6 +122,11 @@ function singUP() {
             setDoc(doc(db,'profiles',uid),{
                 name,
                 lastName,
+                birth,
+                title,
+                state,
+                city,
+                country,
                 createAt: serverTimestamp()
             })
 

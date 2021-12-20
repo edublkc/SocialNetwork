@@ -1,7 +1,3 @@
-import * as effect from "./effects.js"
-
-
-
 export function renderPosts(posts) {
     let feedPostArea = document.querySelector('#feed-area')
     console.log(posts)
@@ -77,10 +73,3 @@ export function renderPosts(posts) {
 }
 
 
-export function renderProfileInfo(currentUserProfile){
-    console.log(currentUserProfile)
-
-    const menuProfileName = document.querySelector('.profile-name')
-
-    menuProfileName.textContent = `${currentUserProfile.name} ${currentUserProfile.lastName}`
-}

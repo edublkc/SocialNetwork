@@ -1,4 +1,10 @@
-import { renderPosts, renderProfileInfo } from "./index.js";
+import { renderPosts } from "./posts.js";
+
+import {header, newPost} from "./components.js"
+
+header()
+newPost()
+
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -61,6 +67,13 @@ async function readProfileInformations (currentUserUid){
     renderProfileInfo(currentUserProfile)
 }
 
+function renderProfileInfo(currentUserProfile){
+    console.log(currentUserProfile)
+
+    const menuProfileName = document.querySelector('.profile-name')
+
+    menuProfileName.textContent = `${currentUserProfile.name} ${currentUserProfile.lastName}`
+}
 
 window.onload = () => {
     getUser()
