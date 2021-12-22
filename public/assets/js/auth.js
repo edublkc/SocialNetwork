@@ -127,6 +127,8 @@ function singUP() {
                 state,
                 city,
                 country,
+                pic:'https://firebasestorage.googleapis.com/v0/b/blkc-network.appspot.com/o/ProfilesImages%2Favatar.png?alt=media&token=6a9c7d9f-0bb1-4690-b0d8-458b42769273',
+                cover: "https://firebasestorage.googleapis.com/v0/b/blkc-network.appspot.com/o/ProfilesImages%2Fbg-login.jpg?alt=media&token=f96eccd5-002d-4125-b7a8-099d245b2e7a",
                 createAt: serverTimestamp()
             })
 

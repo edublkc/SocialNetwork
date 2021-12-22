@@ -234,7 +234,9 @@ main {
 }
 
 .profile-cover {
-    background-color: var(--primary-color);
+    background-image: url(../images/bg-login.jpg);
+    background-position: center;
+    background-size: cover;
     height: 100px;
     position: relative;
     display: flex;

@@ -1,6 +1,6 @@
-export function renderPosts(posts) {
+export function renderPosts(posts,currentUserProfile) {
     let feedPostArea = document.querySelector('#feed-area')
-    console.log(posts)
+    console.log('Peguei aqui o ' +currentUserProfile)
 
     feedPostArea.innerHTML = ''
 
@@ -10,7 +10,7 @@ export function renderPosts(posts) {
         <div class="feed-area--header">
             <div class="feed-area--header__left-side">
                 <div class="feed-area--pic">
-                    <img src="./assets/images/avatar.jpg">
+                    <img src="${posts[i].pic}">
                 </div>
                 <div class="feed-area--infos">
                     <a href=""><span class="feed-area--infos__name">${posts[i].owner}</span></a>
@@ -60,7 +60,7 @@ export function renderPosts(posts) {
     
         <div class="feed-area--new-comment">
             <div class="feed-area--new-comment__pic">
-                <img src="./assets/images/avatar.jpg">
+                <img src="${currentUserProfile.pic}">
             </div>
             <div class="feed-area--new-coment__input">
                 <input type="text" placeholder="Escreva um comentário">

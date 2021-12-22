@@ -66,6 +66,9 @@ async function readProfileInformations(currentUserUid) {
 
 function renderProfileInfo(currentUserProfile) {
     console.log(currentUserProfile)
+    const profileImgCover = document.querySelector('#profile-cover-img')
+    const allImages = document.querySelectorAll('[data-src]')
+
     const fullName = currentUserProfile.name + ' ' + currentUserProfile.lastName
     const location = `${currentUserProfile.city},${currentUserProfile.state} - ${currentUserProfile.country}`
 
@@ -74,6 +77,17 @@ function renderProfileInfo(currentUserProfile) {
     const profileBirth = document.querySelector('#profile-birth')
     const profileLocation = document.querySelector('#profile-location')
 
+    if (currentUserProfile.cover) {
+        profileImgCover.style.backgroundImage = `url(${currentUserProfile.cover})`
+    }
+
+    for(let i = 0; i < allImages.length; i++){
+        const imageAttribute = allImages[i].getAttribute('data-src')
+
+        if (currentUserProfile[imageAttribute]) {
+            allImages[i].src = currentUserProfile[imageAttribute]
+        }
+    }
 
     profileName.textContent = fullName
     profileTitle.textContent = currentUserProfile.title
@@ -121,9 +135,8 @@ async function updateProfileInformations() {
 
 
     for (let i = 0; i < allUploadInputs.length; i++) {
-       
-        let uploadInputField = allUploadInputs[i].getAttribute('id').split('-')
 
+        let uploadInputField = allUploadInputs[i].getAttribute('id').split('-')
 
         if (allUploadInputs[i].files.length > 0) {
             const storageRef = firebase.ref(storage, `ProfilesImages/${currentUserProfile.id}_${uploadInputField[1]}`)
