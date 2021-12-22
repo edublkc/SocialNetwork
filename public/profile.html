@@ -32,10 +32,10 @@
                 <div class="edit-profile-row">
                     <h4>Foto de perfil</h4>
                     <div class="edit-profile--user__pic">
-                        <img src="assets/images/avatar.jpg">
+                        <img id="profile-pic-example" src="assets/images/avatar.jpg">
                     </div>
                     <div class="edit-profile--upload__pic">
-                        <input type="file">
+                        <input id="profile-pic" type="file" data-image>
                     </div>
                 </div>
 
@@ -44,10 +44,10 @@
                 <div class="edit-profile-row">
                     <h4>Foto de capa</h4>
                     <div class="edit-profile--user__cover">
-                        <img src="assets/images/cover.jpg">
+                        <img id="profile-cover-example" src="assets/images/cover.jpg">
                     </div>
                     <div class="edit-profile--upload__pic">
-                        <input type="file">
+                        <input id="profile-cover" type="file" data-image>
                     </div>
                 </div>
 
@@ -56,24 +56,24 @@
                 <div class="edit-profile-row">
                     <h4>Informações pessoais</h4>
                      <div class="form-item register multiple-inputs">
-                        <input  id="register-name" type="text" placeholder="Nome" data-register>
-                        <input  id="register-lastname" type="text" placeholder="Sobrenome" data-register>
+                        <input  id="register-name" type="text" placeholder="Nome" data-profile>
+                        <input  id="register-lastName" type="text" placeholder="Sobrenome" data-profile>
                     </div>
 
                     <div class="form-item register multiple-inputs">
-                        <input id="register-birth" type="text" placeholder="Data de nascimento" data-register>
-                        <input id="register-title" type="text" placeholder="Titulo - Ex.: Desenvolvedor" data-register>
+                        <input id="register-birth" type="text" placeholder="Data de nascimento" data-profile>
+                        <input id="register-title" type="text" placeholder="Titulo - Ex.: Desenvolvedor" data-profile>
                     </div>
 
                     <div class="form-item register multiple-inputs">
-                        <input  id="register-state" type="text" placeholder="Estado" data-register>
-                        <input  id="register-city" type="text" placeholder="Cidade" data-register>
-                        <input  id="register-country" type="text" placeholder="País" data-register>
+                        <input  id="register-state" type="text" placeholder="Estado" data-profile>
+                        <input  id="register-city" type="text" placeholder="Cidade" data-profile>
+                        <input  id="register-country" type="text" placeholder="País" data-profile>
                     </div>
                 </div>
 
                 <div class="line"></div>
-                <button class="bt green">Salvar alterações</button>
+                <button id="profile-save-changes" class="bt green">Salvar alterações</button>
             </div>
         </div>
     </div>
