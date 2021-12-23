@@ -1,3 +1,4 @@
+import { renderPosts } from "./posts.js";
 import { header, closeModal } from "./components.js"
 
 header()
@@ -23,7 +24,8 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = firebase.getStorage()
 
-
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('id');
 
 
 //var profileImages = storageRef.child('ProfilesImages')
@@ -33,7 +35,7 @@ const allProfileCollection = collection(db, 'profiles')
 
 
 var currentUserProfile = {}
-
+var allProfiles = []
 
 function getUser() {
     onAuthStateChanged(auth, (user) => {
@@ -57,43 +59,134 @@ async function readProfileInformations(currentUserUid) {
             currentUserProfile = profile.data()
             currentUserProfile.id = profile.id
         }
+        allProfiles.push({
+            profile: profile.data(),
+            id: profile.id
+        })
 
     })
 
+    readPosts(currentUserUid)
     renderProfileInfo(currentUserProfile)
 }
+
+async function readPosts(currentUserUid) {
+    let posts = []
+    
+    const postsQuery = query(allPostsCollection, orderBy('date', 'desc'))
+    const allPosts = await getDocs(postsQuery)
+    allPosts.docs.forEach((post) => {
+        if(myParam){
+            if(post.data().ownerId == myParam){
+                posts.push(post.data())
+            }
+        }else{
+            if(post.data().ownerId == currentUserUid){
+                posts.push(post.data())
+            }
+        }
+        
+        
+    })
+
+    for (let i = 0; i < posts.length; i++) {
+        const storageRef = await firebase.ref(storage, `ProfilesImages/${posts[i].ownerId}_pic`)
+        const url = await firebase.getDownloadURL(storageRef)
+            .then((urlImage) => posts[i].pic = urlImage)
+            .catch(() => posts[i].pic = currentUserProfile.pic)
+
+        for(let j = 0; j < allProfiles.length; j++){
+            if(posts[i].ownerId == allProfiles[j].id){
+                posts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
+            }
+        }
+    }
+
+    renderPosts(posts, currentUserProfile)
+}
+
 
 
 function renderProfileInfo(currentUserProfile) {
     console.log(currentUserProfile)
-    const profileImgCover = document.querySelector('#profile-cover-img')
-    const allImages = document.querySelectorAll('[data-src]')
+    
+    
 
-    const fullName = currentUserProfile.name + ' ' + currentUserProfile.lastName
-    const location = `${currentUserProfile.city},${currentUserProfile.state} - ${currentUserProfile.country}`
+    if (myParam == null) {
+        const profileImgCover = document.querySelector('#profile-cover-img')
+        const allImages = document.querySelectorAll('[data-src]')
+
+        const fullName = currentUserProfile.name + ' ' + currentUserProfile.lastName
+        const location = `${currentUserProfile.city},${currentUserProfile.state} - ${currentUserProfile.country}`
+
+        const profileName = document.querySelector('.profile-header--infos__about--name')
+        const profileTitle = document.querySelector('.profile-header--infos__about--local')
+        const profileBirth = document.querySelector('#profile-birth')
+        const profileLocation = document.querySelector('#profile-location')
+
+        const editProfileButton = document.querySelector('#profile-edit')
+
+        if (currentUserProfile.cover) {
+            profileImgCover.style.backgroundImage = `url(${currentUserProfile.cover})`
+        }
+
+        for (let i = 0; i < allImages.length; i++) {
+            const imageAttribute = allImages[i].getAttribute('data-src')
+
+            if (currentUserProfile[imageAttribute]) {
+                allImages[i].src = currentUserProfile[imageAttribute]
+            }
+        }
+
+        profileName.textContent = fullName
+        profileTitle.textContent = currentUserProfile.title
+        profileBirth.innerHTML += currentUserProfile.birth
+        profileLocation.innerHTML += location
+
+        editProfileButton.style.display = "block"
+    }else{
+        
+        if(currentUserProfile.pic){
+            const profileHeaderPic = document.querySelector('#profile-pic-header')
+            profileHeaderPic.src = currentUserProfile.pic
+        }
+
+        renderOtherProfiles(myParam)
+    }
+}
+
+function renderOtherProfiles(myParam){
+    console.log(myParam)
+    let currentProfile = allProfiles.filter(profile => profile.id == myParam)
+
+    const fullName = currentProfile[0].profile.name + ' ' + currentProfile[0].profile.lastName
+    const location = `${currentProfile[0].profile.city},${currentProfile[0].profile.state} - ${currentProfile[0].profile.country}`
 
     const profileName = document.querySelector('.profile-header--infos__about--name')
     const profileTitle = document.querySelector('.profile-header--infos__about--local')
     const profileBirth = document.querySelector('#profile-birth')
     const profileLocation = document.querySelector('#profile-location')
 
-    if (currentUserProfile.cover) {
-        profileImgCover.style.backgroundImage = `url(${currentUserProfile.cover})`
-    }
+    const followProfileButton = document.querySelector('#profile-follow')
 
-    for(let i = 0; i < allImages.length; i++){
-        const imageAttribute = allImages[i].getAttribute('data-src')
+    const profilePic = document.querySelector('#profile-pic-img')
+    const profileCover = document.querySelector('#profile-cover-img')
 
-        if (currentUserProfile[imageAttribute]) {
-            allImages[i].src = currentUserProfile[imageAttribute]
-        }
-    }
+
+    profilePic.src = currentProfile[0].profile.pic
+    profileCover.style.backgroundImage = `url(${currentProfile[0].profile.cover})`
 
     profileName.textContent = fullName
-    profileTitle.textContent = currentUserProfile.title
-    profileBirth.innerHTML += currentUserProfile.birth
+    profileTitle.textContent = currentProfile[0].profile.title
+    profileBirth.innerHTML += currentProfile[0].profile.birth
     profileLocation.innerHTML += location
+
+    followProfileButton.style.display = "block"
+
+
+    console.log(currentProfile)
 }
+
 
 window.onload = () => {
     getUser()
@@ -110,7 +203,7 @@ logoutButton.addEventListener('click', () => {
 })
 
 
-const editProfileButton = document.querySelector('.profile-edit')
+const editProfileButton = document.querySelector('#profile-edit')
 const modal = document.querySelector('.modal')
 const body = document.querySelector('body')
 

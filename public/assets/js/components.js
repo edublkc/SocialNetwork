@@ -21,7 +21,7 @@ export function header(){
 
         <div class="menu-right-side">
             <div class="menu-profile">
-                <img src="./assets/images/avatar.png" data-src="pic">
+                <img id="profile-pic-header" src="./assets/images/avatar.png" data-src="pic">
                 <div class="menu-profile--more">
                     <span id="menu-profile--name"></span>
                     <i class="fas fa-caret-down"></i>

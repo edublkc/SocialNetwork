@@ -13,7 +13,7 @@ export function renderPosts(posts,currentUserProfile) {
                     <img src="${posts[i].pic}">
                 </div>
                 <div class="feed-area--infos">
-                    <a href=""><span class="feed-area--infos__name">${posts[i].owner}</span></a>
+                    <a href="/public/profile.html?id=${posts[i].ownerId}"><span class="feed-area--infos__name">${posts[i].owner}</span></a>
                     <span class="feed-area--infos__date">${posts[i].date.toDate()}</span>
                 </div>
             </div>

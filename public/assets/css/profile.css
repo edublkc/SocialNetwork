@@ -121,17 +121,30 @@ main{
     color: var(--secundary-color);
 }
 
-.profile-body--about__info.edit .profile-edit{
+.profile-body--about__info.edit .profile-button{
     background-color: var(--primary-color);
     width: fit-content;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     color: var(--white-color);
+    transition: 0.2s;
+}
+
+.profile-body--about__info.edit .profile-button:hover{
+    background-color: var(--secundary-color);
+}
+
+#profile-follow, #profile-edit{
+    display: none;
 }
 
 .profile-body--rightside{
     flex: 2;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .edit-profile-row{
