@@ -100,10 +100,13 @@ function renderProfileInfo(currentUserProfile) {
     const profileCover = document.querySelector('.profile-cover')
     const menuProfileName = document.querySelector('.profile-name')
     const menuProfileTitle = document.querySelector('#profile-title')
-
+    const followingNumber = document.querySelector('#profile-home-following')
+    const followerNumber = document.querySelector('#profile-home-follower')
 
     menuProfileName.textContent = `${currentUserProfile.name} ${currentUserProfile.lastName}`
     menuProfileTitle.textContent = `${currentUserProfile.title}`
+    followingNumber.textContent = currentUserProfile.following.length
+    followerNumber.textContent = currentUserProfile.follower.length
 
     if (currentUserProfile.cover) {
         profileCover.style.backgroundImage = `url(${currentUserProfile.cover})`

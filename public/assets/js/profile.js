@@ -66,27 +66,28 @@ async function readProfileInformations(currentUserUid) {
 
     })
 
+    checkIfFollow()
     readPosts(currentUserUid)
     renderProfileInfo(currentUserProfile)
 }
 
 async function readPosts(currentUserUid) {
     let posts = []
-    
+
     const postsQuery = query(allPostsCollection, orderBy('date', 'desc'))
     const allPosts = await getDocs(postsQuery)
     allPosts.docs.forEach((post) => {
-        if(myParam){
-            if(post.data().ownerId == myParam){
+        if (myParam) {
+            if (post.data().ownerId == myParam) {
                 posts.push(post.data())
             }
-        }else{
-            if(post.data().ownerId == currentUserUid){
+        } else {
+            if (post.data().ownerId == currentUserUid) {
                 posts.push(post.data())
             }
         }
-        
-        
+
+
     })
 
     for (let i = 0; i < posts.length; i++) {
@@ -95,8 +96,8 @@ async function readPosts(currentUserUid) {
             .then((urlImage) => posts[i].pic = urlImage)
             .catch(() => posts[i].pic = currentUserProfile.pic)
 
-        for(let j = 0; j < allProfiles.length; j++){
-            if(posts[i].ownerId == allProfiles[j].id){
+        for (let j = 0; j < allProfiles.length; j++) {
+            if (posts[i].ownerId == allProfiles[j].id) {
                 posts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
             }
         }
@@ -109,8 +110,8 @@ async function readPosts(currentUserUid) {
 
 function renderProfileInfo(currentUserProfile) {
     console.log(currentUserProfile)
-    
-    
+
+
 
     if (myParam == null) {
         const profileImgCover = document.querySelector('#profile-cover-img')
@@ -121,6 +122,10 @@ function renderProfileInfo(currentUserProfile) {
 
         const profileName = document.querySelector('.profile-header--infos__about--name')
         const profileTitle = document.querySelector('.profile-header--infos__about--local')
+
+        const profileFollowers = document.querySelector('#profile-followers')
+        const profileFollowing = document.querySelector('#profile-following')
+
         const profileBirth = document.querySelector('#profile-birth')
         const profileLocation = document.querySelector('#profile-location')
 
@@ -140,13 +145,15 @@ function renderProfileInfo(currentUserProfile) {
 
         profileName.textContent = fullName
         profileTitle.textContent = currentUserProfile.title
+        profileFollowers.textContent = currentUserProfile.follower.length
+        profileFollowing.textContent = currentUserProfile.following.length
         profileBirth.innerHTML += currentUserProfile.birth
         profileLocation.innerHTML += location
 
         editProfileButton.style.display = "block"
-    }else{
-        
-        if(currentUserProfile.pic){
+    } else {
+
+        if (currentUserProfile.pic) {
             const profileHeaderPic = document.querySelector('#profile-pic-header')
             profileHeaderPic.src = currentUserProfile.pic
         }
@@ -155,7 +162,7 @@ function renderProfileInfo(currentUserProfile) {
     }
 }
 
-function renderOtherProfiles(myParam){
+function renderOtherProfiles(myParam) {
     console.log(myParam)
     let currentProfile = allProfiles.filter(profile => profile.id == myParam)
 
@@ -164,8 +171,15 @@ function renderOtherProfiles(myParam){
 
     const profileName = document.querySelector('.profile-header--infos__about--name')
     const profileTitle = document.querySelector('.profile-header--infos__about--local')
+
+    const profileFollowers = document.querySelector('#profile-followers')
+    const profileFollowing = document.querySelector('#profile-following')
+
     const profileBirth = document.querySelector('#profile-birth')
     const profileLocation = document.querySelector('#profile-location')
+
+    profileBirth.textContent = ''
+    profileLocation.textContent = ''
 
     const followProfileButton = document.querySelector('#profile-follow')
 
@@ -178,8 +192,10 @@ function renderOtherProfiles(myParam){
 
     profileName.textContent = fullName
     profileTitle.textContent = currentProfile[0].profile.title
-    profileBirth.innerHTML += currentProfile[0].profile.birth
-    profileLocation.innerHTML += location
+    profileFollowers.textContent = currentProfile[0].profile.follower.length
+    profileFollowing.textContent = currentProfile[0].profile.following.length
+    profileBirth.innerHTML += `<i class="fas fa-calendar-week"></i> ${currentProfile[0].profile.birth}`
+    profileLocation.innerHTML += `<i class="fas fa-map-marker-alt"></i> ${location}`
 
     followProfileButton.style.display = "block"
 
@@ -187,13 +203,12 @@ function renderOtherProfiles(myParam){
     console.log(currentProfile)
 }
 
-
 window.onload = () => {
     getUser()
 }
 
 
-
+//LOGOUT
 const logoutButton = document.querySelector('#logout-button')
 logoutButton.addEventListener('click', () => {
     signOut(auth)
@@ -203,6 +218,8 @@ logoutButton.addEventListener('click', () => {
 })
 
 
+
+//UPDATE PROFILE INFORMATIONS
 const editProfileButton = document.querySelector('#profile-edit')
 const modal = document.querySelector('.modal')
 const body = document.querySelector('body')
@@ -222,7 +239,7 @@ saveChangesButton.addEventListener('click', updateProfileInformations)
 async function updateProfileInformations() {
     const updateInfosObj = {}
 
-    //Upload images
+
     const allUploadInputs = document.querySelectorAll('[data-image]')
 
 
@@ -240,7 +257,7 @@ async function updateProfileInformations() {
     }
 
 
-    //Upload personal informations
+
     const allInputs = document.querySelectorAll('[data-profile]')
 
 
@@ -262,3 +279,64 @@ async function updateProfileInformations() {
     window.location.reload()
 }
 
+
+//FOLLOW AND UNFOLLOW PERSONS
+const followProfileButton = document.querySelector('#profile-follow')
+followProfileButton.addEventListener('click', followSomePerson)
+
+function checkIfFollow() {
+
+    let isFollwing = currentUserProfile.following.filter(id => id == myParam)
+
+    if (isFollwing.length > 0) {
+        followProfileButton.innerHTML = `<i class="fas fa-user-minus"></i> Deixar de seguir`
+    } else {
+        followProfileButton.innerHTML = `<i class="fas fa-user-plus"></i> Seguir`
+    }
+
+}
+
+async function followSomePerson() {
+    let isFollwing = currentUserProfile.following.filter(id => id == myParam)
+
+    if (isFollwing.length > 0) {
+        unFollowSomePerson()
+
+
+    } else {
+        const currentFollwers = currentUserProfile.following
+        const userProfileRef = doc(db, 'profiles', currentUserProfile.id)
+        const profileUpdate = await updateDoc(userProfileRef, { following: [...currentFollwers, myParam] })
+
+
+        const otherPersonProfileInformations = allProfiles.filter(profile => profile.id == myParam)
+        const followersOtherPerson = otherPersonProfileInformations[0].profile.follower
+        const otherPersonProfileRef = doc(db, 'profiles', otherPersonProfileInformations[0].id)
+        const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follower: [...followersOtherPerson, currentUserProfile.id] })
+
+        currentUserProfile = {}
+        allProfiles = []
+
+        getUser()
+    }
+}
+
+async function unFollowSomePerson() {
+
+    const currentFollwersWithOutUnFollow = currentUserProfile.following.filter(id => id != myParam)
+    const userProfileRef = doc(db, 'profiles', currentUserProfile.id)
+    const profileUpdate = await updateDoc(userProfileRef, { following: currentFollwersWithOutUnFollow })
+
+
+    const otherPersonProfileInformations = allProfiles.filter(profile => profile.id == myParam)
+    const followersOtherPerson = otherPersonProfileInformations[0].profile.follower
+    const followersOtherPersonWithOutMyId = followersOtherPerson.filter(id => id != currentUserProfile.id)
+    const otherPersonProfileRef = doc(db, 'profiles', otherPersonProfileInformations[0].id)
+    const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follower: followersOtherPersonWithOutMyId })
+    
+    currentUserProfile = {}
+    allProfiles = []
+
+    getUser()
+
+}
