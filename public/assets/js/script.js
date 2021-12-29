@@ -55,20 +55,35 @@ async function readPosts(currentUserUid) {
         posts.push(post.data())
     })
 
-    for (let i = 0; i < posts.length; i++) {
-        const storageRef = await firebase.ref(storage, `ProfilesImages/${posts[i].ownerId}_pic`)
-        const url = await firebase.getDownloadURL(storageRef)
-            .then((urlImage) => posts[i].pic = urlImage)
-            .catch(() => posts[i].pic = currentUserProfile.pic)
+    let myFriendPosts = []
 
-        for(let j = 0; j < allProfiles.length; j++){
-            if(posts[i].ownerId == allProfiles[j].id){
-                posts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
+    for (let i = 0; i < posts.length; i++) {
+        for (let j = 0; j < currentUserProfile.following.length; j++) {
+            if (posts[i].ownerId == currentUserProfile.following[j]) {
+                myFriendPosts.push(posts[i])
+            }
+        }
+        if (posts[i].ownerId == currentUserUid) {
+            myFriendPosts.push(posts[i])
+        }
+    }
+
+
+
+    for (let i = 0; i < myFriendPosts.length; i++) {
+        const storageRef = await firebase.ref(storage, `ProfilesImages/${myFriendPosts[i].ownerId}_pic`)
+        const url = await firebase.getDownloadURL(storageRef)
+            .then((urlImage) => myFriendPosts[i].pic = urlImage)
+            .catch(() => myFriendPosts[i].pic = currentUserProfile.pic)
+
+        for (let j = 0; j < allProfiles.length; j++) {
+            if (myFriendPosts[i].ownerId == allProfiles[j].id) {
+                myFriendPosts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
             }
         }
     }
 
-    renderPosts(posts, currentUserProfile)
+    renderPosts(myFriendPosts, currentUserProfile)
 }
 
 async function readProfileInformations(currentUserUid) {
@@ -80,11 +95,11 @@ async function readProfileInformations(currentUserUid) {
             currentUserProfile.id = profile.id
         }
 
-            allProfiles.push({
-                profile: profile.data(),
-                id: profile.id
-            })
-        
+        allProfiles.push({
+            profile: profile.data(),
+            id: profile.id
+        })
+
 
     })
 
@@ -145,7 +160,7 @@ async function addNewPost() {
         owner: currentUserProfile.name + ' ' + currentUserProfile.lastName
     })
 
-    readPosts()
+    readPosts(currentUserProfile.id)
 }
 
 
