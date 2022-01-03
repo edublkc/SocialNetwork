@@ -1,0 +1,59 @@
+@import url(./default.css);
+
+
+main{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+.wrap{
+    width: 100%; 
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-result{
+    display: flex;
+    align-items: center;
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.search-result--profile__pic img{
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    cursor: pointer;
+}   
+
+.search-result--infos{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#search-result--infos__name{
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+#search-result--infos__name:hover{
+    text-decoration: underline;
+}
+
+#search-result--infos__title{
+    font-weight: 500;
+    color: var(--black-color);
+    text-decoration: none;
+}

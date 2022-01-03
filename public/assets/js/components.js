@@ -12,7 +12,7 @@ export function header(){
                     <input id="search-input" type="text" placeholder="Pesquisar">
                     <i id="search-remove-bt" class="fas fa-times"></i>
                     <div class="search-icon">
-                        <i class="fas fa-search"></i>
+                        <a id="search-button" href=""><i class="fas fa-search"></i></a>
                     </div>
                 </div>
                 <i class="fas fa-bars menu-mobile"></i>
@@ -44,7 +44,7 @@ function headerEffects(){
     const searchInput = document.querySelector('#search-input');
     const searchBox = document.querySelector('.search-box')
     const searchButtonRemoveAllText = document.querySelector('#search-remove-bt')
-    
+    const searchButton = document.querySelector('#search-button')
     
     searchInput.addEventListener('focus', () => {
         searchBox.classList.toggle('focus')
@@ -67,7 +67,28 @@ function headerEffects(){
         searchInput.value = ""
         searchButtonRemoveAllText.style.display = "none"
     })
+
+    
+        searchButton.addEventListener('click',search)
+    
 }
+
+function search(event){
+    const searchInput = document.querySelector('#search-input').value.trim()
+    
+    if(searchInput){
+        const searchInput = document.querySelector('#search-input').value.trim()
+        const searchButton = document.querySelector('#search-button')
+        
+        searchButton.href = `/public/search.html?search=${searchInput}`
+    }else{
+        event.preventDefault()
+    }
+    
+}
+
+
+
 
 //New post click effect
 export function newPost(){

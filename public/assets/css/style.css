@@ -88,6 +88,10 @@ header {
     cursor: pointer;
 }
 
+#search-button{
+    text-decoration: none;
+}
+
 i.menu-mobile {
     display: none;
     color: var(--white-color);

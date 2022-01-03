@@ -113,7 +113,7 @@ function renderProfileInfo(currentUserProfile) {
 
 
 
-    if (myParam == null) {
+    if (myParam == null || myParam == currentUserProfile.id) {
         const profileImgCover = document.querySelector('#profile-cover-img')
         const allImages = document.querySelectorAll('[data-src]')
 
