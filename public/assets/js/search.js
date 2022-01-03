@@ -75,14 +75,15 @@ function renderHeader() {
 
 function search() {
     let resultArray = []
+    let allLetterLower = myParam.toLocaleLowerCase()
 
-    if(myParam){
+    if(allLetterLower){
         for (let i = 0; i < allProfiles.length; i++) {
-            if (allProfiles[i].profile.name.includes(myParam)) {
+            if (allProfiles[i].profile.name.toLocaleLowerCase().includes(allLetterLower)) {
                 resultArray.push(allProfiles[i])
-            }else if(allProfiles[i].profile.lastName.includes(myParam)){
+            }else if(allProfiles[i].profile.lastName.toLocaleLowerCase().includes(allLetterLower)){
                 resultArray.push(allProfiles[i])
-            } else if(allProfiles[i].profile.title.includes(myParam)){
+            } else if(allProfiles[i].profile.title.toLocaleLowerCase().includes(allLetterLower)){
                 resultArray.push(allProfiles[i])
             }
         }
