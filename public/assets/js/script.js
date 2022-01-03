@@ -1,3 +1,5 @@
+//SCRIPT
+
 import { renderPosts } from "./posts.js";
 
 import { header, newPost } from "./components.js"
@@ -22,6 +24,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = firebase.getStorage()
@@ -52,18 +55,23 @@ async function readPosts(currentUserUid) {
     const postsQuery = query(allPostsCollection, orderBy('date', 'desc'))
     const allPosts = await getDocs(postsQuery)
     allPosts.docs.forEach((post) => {
-        posts.push(post.data())
+        posts.push(
+            {
+                post: post.data(),
+                id: post.id
+            }
+        )
     })
 
     let myFriendPosts = []
 
     for (let i = 0; i < posts.length; i++) {
         for (let j = 0; j < currentUserProfile.following.length; j++) {
-            if (posts[i].ownerId == currentUserProfile.following[j]) {
+            if (posts[i].post.ownerId == currentUserProfile.following[j]) {
                 myFriendPosts.push(posts[i])
             }
         }
-        if (posts[i].ownerId == currentUserUid) {
+        if (posts[i].post.ownerId == currentUserUid) {
             myFriendPosts.push(posts[i])
         }
     }
@@ -71,14 +79,14 @@ async function readPosts(currentUserUid) {
 
 
     for (let i = 0; i < myFriendPosts.length; i++) {
-        const storageRef = await firebase.ref(storage, `ProfilesImages/${myFriendPosts[i].ownerId}_pic`)
+        const storageRef = await firebase.ref(storage, `ProfilesImages/${myFriendPosts[i].post.ownerId}_pic`)
         const url = await firebase.getDownloadURL(storageRef)
-            .then((urlImage) => myFriendPosts[i].pic = urlImage)
-            .catch(() => myFriendPosts[i].pic = currentUserProfile.pic)
+            .then((urlImage) => myFriendPosts[i].post.pic = urlImage)
+            .catch(() => myFriendPosts[i].post.pic = currentUserProfile.pic)
 
         for (let j = 0; j < allProfiles.length; j++) {
-            if (myFriendPosts[i].ownerId == allProfiles[j].id) {
-                myFriendPosts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
+            if (myFriendPosts[i].post.ownerId == allProfiles[j].id) {
+                myFriendPosts[i].post.owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
             }
         }
     }
@@ -86,7 +94,7 @@ async function readPosts(currentUserUid) {
     renderPosts(myFriendPosts, currentUserProfile)
 }
 
-async function readProfileInformations(currentUserUid) {
+export async function readProfileInformations(currentUserUid) {
 
     const profile = await getDocs(allProfileCollection)
     profile.docs.forEach((profile) => {
@@ -153,7 +161,7 @@ async function addNewPost() {
     const docRef = await addDoc(allPostsCollection, {
         text: newPostInput,
         date: serverTimestamp(),
-        like: 0,
+        like: [],
         comments: '',
         pic: currentUserProfile.pic,
         ownerId: currentUserProfile.id,
@@ -170,4 +178,3 @@ logoutButton.addEventListener('click', () => {
             window.location.replace('login.html')
         })
 })
-

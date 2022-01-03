@@ -79,11 +79,21 @@ async function readPosts(currentUserUid) {
     allPosts.docs.forEach((post) => {
         if (myParam) {
             if (post.data().ownerId == myParam) {
-                posts.push(post.data())
+                posts.push(
+                    {
+                        post: post.data(),
+                        id: post.id
+                    }
+                )
             }
         } else {
             if (post.data().ownerId == currentUserUid) {
-                posts.push(post.data())
+                posts.push(
+                    {
+                        post: post.data(),
+                        id: post.id
+                    }
+                )
             }
         }
 
@@ -91,14 +101,14 @@ async function readPosts(currentUserUid) {
     })
 
     for (let i = 0; i < posts.length; i++) {
-        const storageRef = await firebase.ref(storage, `ProfilesImages/${posts[i].ownerId}_pic`)
+        const storageRef = await firebase.ref(storage, `ProfilesImages/${posts[i].post.ownerId}_pic`)
         const url = await firebase.getDownloadURL(storageRef)
-            .then((urlImage) => posts[i].pic = urlImage)
-            .catch(() => posts[i].pic = currentUserProfile.pic)
+            .then((urlImage) => posts[i].post.pic = urlImage)
+            .catch(() => posts[i].post.pic = currentUserProfile.pic)
 
         for (let j = 0; j < allProfiles.length; j++) {
-            if (posts[i].ownerId == allProfiles[j].id) {
-                posts[i].owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
+            if (posts[i].post.ownerId == allProfiles[j].id) {
+                posts[i].post.owner = `${allProfiles[j].profile.name} ${allProfiles[j].profile.lastName}`
             }
         }
     }
