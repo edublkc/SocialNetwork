@@ -208,6 +208,9 @@
 
 .feed-area--new-coment__input{
     width: 100%;
+    gap: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .feed-area--new-coment__input input{
@@ -219,6 +222,7 @@
     outline: none;
     background-color: #eee;
 }
+
 
 @media (max-width: 800px) {
     .new-post-area{

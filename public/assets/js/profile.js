@@ -357,9 +357,20 @@ async function unFollowSomePerson() {
 function renderPosts(posts, currentUserProfile) {
     const feedPostArea = document.querySelector('#feed-area')
 
-   // console.log(posts)
+    // console.log(posts)
 
     feedPostArea.innerHTML = ''
+
+    for(let i = 0; i < posts.length; i++){
+        for(let j = 0; j < posts[i].post.comments.length; j++){
+            for(let x = 0; x < allProfiles.length; x++){
+                if(posts[i].post.comments[j].userId == allProfiles[x].id){
+                    posts[i].post.comments[j].pic = allProfiles[x].profile.pic
+                    posts[i].post.comments[j].name = `${allProfiles[x].profile.name} ${allProfiles[x].profile.lastName}`
+                }
+            }
+        }
+    }
 
     for (let i = 0; i < posts.length; i++) {
         feedPostArea.innerHTML += `
@@ -392,27 +403,13 @@ function renderPosts(posts, currentUserProfile) {
                 </div>
                 <div class="feed-area--comments__button">
                     <span><i class="far fa-comment-alt"></i></span>
-                    <span>0</span>
+                    <span>${posts[i].post.comments.length}</span>
                 </div>
             </div>
         <div class="line"></div>
     
-        <div class="feed-area--all-comments">
+        <div class="feed-area--all-comments" data-allcomments="id-${i}">
 
-            <div class="feed-area--comment">
-                <div class="feed-area--comment__pic">
-                    <img src="./assets/images/avatar.jpg">
-                </div>
-                <div class="feed-area--comment__wrap">
-                    <div class="feed-area--comment__user">
-                        <a href=""><span>Eduardo Mota</span></a>
-                    </div>
-                    <div class="feed-area--comment__text">
-                        <p>${posts[i].post.comments}</p>
-                    </div>
-                </div>
-            </div>     
-           
         </div>
     
         <div class="feed-area--new-comment">
@@ -420,45 +417,94 @@ function renderPosts(posts, currentUserProfile) {
                 <img src="${currentUserProfile.pic}">
             </div>
             <div class="feed-area--new-coment__input">
-                <input type="text" placeholder="Escreva um comentário">
+                <input data-comment="id-${i}" type="text" placeholder="Escreva um comentário">
             </div>
         </div>
         `
+        for (let j = 0; j < posts[i].post.comments.length; j++) {
+            let commentArea = document.querySelector(`[data-allcomments="id-${i}"]`)
+
+            commentArea.innerHTML += `
+            <div class="feed-area--comment">
+            <div class="feed-area--comment__pic">
+                <img src="${posts[i].post.comments[j].pic}">
+            </div>
+            <div class="feed-area--comment__wrap">
+                <div class="feed-area--comment__user">
+                    <a href=""><span>${posts[i].post.comments[j].name}</span></a>
+                </div>
+                <div class="feed-area--comment__text">
+                    <p>${posts[i].post.comments[j].comment}</p>
+                </div>
+            </div>
+        </div>   
+            `
+        }
 
         setTimeout(() => {
-            
-            let likeButton = document.querySelector(`[data-like="id-${i}"]`)
-           
 
+            let likeButton = document.querySelector(`[data-like="id-${i}"]`)
             likeButton.addEventListener('click', function () {
 
                 systemLike(posts[i].id, posts[i].post.like, currentUserProfile.id, i)
             })
 
-            
+            let commentInput = document.querySelector(`[data-comment="id-${i}"]`)
+            commentInput.addEventListener('focusin', () => {
+                commentInput.onkeyup = (e) => {
+                    if (e.keyCode == 13) {
+                        systemComment(i, posts[i].id, posts, posts[i].post.comments)
+                    }
+                }
+            })
+
         }, 200)
 
-        
+
     }
 
-    renderLikes(posts,currentUserProfile.id)
+    //renderCommentImageAndName(posts)
+    renderLikes(posts, currentUserProfile.id)
+}
+
+async function systemComment(id, postId, posts, allComments) {
+    let commentInput = document.querySelector(`[data-comment="id-${id}"]`).value.trim()
+
+    let userId = currentUserProfile.id
+    const postRef = doc(db, 'posts', postId)
+    const profileUpdate = await updateDoc(postRef, {
+        comments: [...allComments,
+        {
+            userId,
+            comment: commentInput,
+            pic: currentUserProfile.pic,
+            name: `${currentUserProfile.name} ${currentUserProfile.lastName}`
+        }]
+    })
+
+    console.log('funcionou')
+
+    getUser()
+    //readProfileInformations(userId)
 }
 
 
-async function renderLikes(posts,uid){
+//LIKE SYSTEM
+async function renderLikes(posts, uid) {
     console.log(posts)
 
-    for(let i = 0; i < posts.length; i++){
+    for (let i = 0; i < posts.length; i++) {
         let likeStar = document.querySelector(`[data-ok="id-${i}"]`)
         let likeNum = document.querySelector(`[data-num="id-${i}"]`)
 
-        for(let j = 0; j < posts[i].post.like.length; j++){
-            if(posts[i].post.like[j] == uid){
-                    likeStar.classList.add('liked')
-                    likeStar.innerHTML = `<i class="fas fa-star"></i>`
-                    likeNum.classList.add('liked')
+        for (let j = 0; j < posts[i].post.like.length; j++) {
+            if (posts[i].post.like[j] == uid) {
+                likeStar.classList.add('liked')
+                likeStar.innerHTML = `<i class="fas fa-star"></i>`
+                likeNum.classList.add('liked')
             }
         }
+
     }
 }
 
@@ -470,7 +516,7 @@ async function systemLike(postId, amountLike, uid, id) {
     let isLiking = amountLike.filter(likeId => likeId == uid)
 
     //removing like
-    if(isLiking.length > 0){
+    if (isLiking.length > 0) {
         let likesWithOutMyLike = amountLike.filter(likeId => likeId != uid)
 
         const postRef = doc(db, 'posts', postId)
@@ -481,7 +527,7 @@ async function systemLike(postId, amountLike, uid, id) {
         likeNum.classList.remove('liked')
     }
     //adding like
-    else{
+    else {
         let likesWithMyLike = amountLike.filter(likeId => likeId != uid)
 
         const postRef = doc(db, 'posts', postId)
@@ -492,8 +538,8 @@ async function systemLike(postId, amountLike, uid, id) {
         likeNum.classList.add('liked')
     }
 
-    
-        readProfileInformations(uid)
-    
-    
+    getUser()
+    //readProfileInformations(uid)
+
+
 }
