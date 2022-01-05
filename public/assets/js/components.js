@@ -3,6 +3,22 @@ export function header(){
     const header = document.querySelector('header')
 
     header.innerHTML = `
+    <div class="menu-mobile">
+        <div class="menu-mobile--options">
+        <span class="menu-mobile--options__close"><i class="fas fa-times"></i></span>
+            <div class="menu-mobile--options__profile">
+                <img src="./assets/images/avatar.png" data-src="pic">
+                <span id="menu-mobile--name"></span>
+            </div>
+            <div class="line"></div>
+            <ul>
+            <li><a href="/public/index.html"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="/public/profile.html"><i class="fas fa-user-alt"></i> Meu Perfil</a></li>
+                <li><a id="logout-button" href=""><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="menu-left-side">
             <div class="logo">
                 <h1><a href="index.html">Blkc Network</a></h1>
@@ -29,7 +45,7 @@ export function header(){
 
                 <div class="menu-profile--dropdown">
                     <ul>
-                        <li><a href="">Meu Perfil</a></li>
+                        <li><a href="/public/profile.html">Meu Perfil</a></li>
                         <li><a id="logout-button" href="">Sair</a></li>
                     </ul>
                 </div>
@@ -45,7 +61,10 @@ function headerEffects(){
     const searchBox = document.querySelector('.search-box')
     const searchButtonRemoveAllText = document.querySelector('#search-remove-bt')
     const searchButton = document.querySelector('#search-button')
-    
+    const menuProfile = document.querySelector('.menu-profile')
+    const menuMobile = document.querySelector('.menu-mobile')
+    const closeMenuMobileButton = document.querySelector('.menu-mobile--options__close')
+
     searchInput.addEventListener('focus', () => {
         searchBox.classList.toggle('focus')
     })
@@ -68,8 +87,19 @@ function headerEffects(){
         searchButtonRemoveAllText.style.display = "none"
     })
 
+    searchButton.addEventListener('click',search)
+
+    //Menu mobile
     
-        searchButton.addEventListener('click',search)
+        menuProfile.addEventListener('click',()=>{
+            if(window.innerWidth <= 800 ){
+               menuMobile.classList.add('active')
+            }
+        })
+        closeMenuMobileButton.addEventListener('click',function(){
+            menuMobile.classList.remove('active')
+        })
+    
     
 }
 

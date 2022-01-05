@@ -41,9 +41,11 @@ function getUser() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const userProfileName = document.querySelector('#menu-profile--name')
+            const userPorfileNameMobile = document.querySelector('#menu-mobile--name')
+
             readProfileInformations(user.uid)
             userProfileName.innerHTML = user.email
-
+            userPorfileNameMobile.innerHTML = user.email
         } else {
             window.location.replace('login.html')
         }
