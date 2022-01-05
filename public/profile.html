@@ -35,7 +35,7 @@
                         <img id="profile-pic-example" src="assets/images/avatar.png" data-src="pic">
                     </div>
                     <div class="edit-profile--upload__pic">
-                        <input id="profile-pic" type="file" data-image>
+                        <input id="profile-pic" type="file" accept="image/*" data-image>
                     </div>
                 </div>
 
@@ -44,10 +44,10 @@
                 <div class="edit-profile-row">
                     <h4>Foto de capa</h4>
                     <div class="edit-profile--user__cover">
-                        <img id="profile-cover-example" src="assets/images/bg-login.jpg" data-src="cover">
+                        <img id="profile-cover-example" src="assets/images/bg-login.jpg"  data-src="cover">
                     </div>
                     <div class="edit-profile--upload__pic">
-                        <input id="profile-cover" type="file" data-image>
+                        <input id="profile-cover" type="file" accept="image/*" data-image>
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="form-item register multiple-inputs">
-                        <input id="register-birth" type="text" placeholder="Data de nascimento" data-profile>
+                        <input id="register-birth" type="text" placeholder="Data de nascimento" maxlength="10" data-profile>
                         <input id="register-title" type="text" placeholder="Titulo - Ex.: Desenvolvedor" data-profile>
                     </div>
 

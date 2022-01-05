@@ -239,6 +239,19 @@ const body = document.querySelector('body')
 editProfileButton.addEventListener('click', () => {
     modal.classList.add('openned-big')
     body.style.overflow = "hidden"
+
+    const allInputs = document.querySelectorAll('[data-profile]')
+
+    for (let i = 0; i < allInputs.length; i++) {
+        let idInput = allInputs[i].getAttribute('id')
+        let updateName = allInputs[i].getAttribute('id').split('-')
+        let documentValue = document.querySelector(`#${idInput}`)
+
+        allInputs[i].value = currentUserProfile[updateName[1]]
+    }
+
+    const allUploadInputs = document.querySelectorAll('[data-image]')
+    console.log(allUploadInputs[0].files)
     closeModal()
 })
 
@@ -254,16 +267,17 @@ async function updateProfileInformations() {
 
     const allUploadInputs = document.querySelectorAll('[data-image]')
 
-
-
     for (let i = 0; i < allUploadInputs.length; i++) {
 
         let uploadInputField = allUploadInputs[i].getAttribute('id').split('-')
 
         if (allUploadInputs[i].files.length > 0) {
-            const storageRef = firebase.ref(storage, `ProfilesImages/${currentUserProfile.id}_${uploadInputField[1]}`)
-            const upload = await firebase.uploadBytesResumable(storageRef, allUploadInputs[i].files[0])
-            const url = await firebase.getDownloadURL(storageRef).then((urlImage) => updateInfosObj[uploadInputField[1]] = urlImage)
+            if(allUploadInputs[i].files[0].type.includes('image')){
+                const storageRef = firebase.ref(storage, `ProfilesImages/${currentUserProfile.id}_${uploadInputField[1]}`)
+                const upload = await firebase.uploadBytesResumable(storageRef, allUploadInputs[i].files[0])
+                const url = await firebase.getDownloadURL(storageRef).then((urlImage) => updateInfosObj[uploadInputField[1]] = urlImage)
+            }
+           
         }
 
     }
@@ -354,7 +368,7 @@ async function unFollowSomePerson() {
 }
 
 
-//TESTE POST
+
 
 function renderPosts(posts, currentUserProfile) {
     const feedPostArea = document.querySelector('#feed-area')
@@ -545,3 +559,81 @@ async function systemLike(postId, amountLike, uid, id) {
 
 
 }
+
+
+const dataInput = document.querySelector('#register-birth')
+
+dataInput.onkeypress = (event) =>{
+    mascaraData(event.target)
+}
+
+function mascaraData(val) {
+    var pass = val.value;
+    var expr = /[0123456789]/;
+  
+    for (let i = 0; i < pass.length; i++) {
+      // charAt -> retorna o caractere posicionado no índice especificado
+      var lchar = val.value.charAt(i);
+      var nchar = val.value.charAt(i + 1);
+  
+      if (i == 0) {
+        // search -> retorna um valor inteiro, indicando a posição do inicio da primeira
+        // ocorrência de expReg dentro de instStr. Se nenhuma ocorrencia for encontrada o método retornara -1
+        // instStr.search(expReg);
+        if ((lchar.search(expr) != 0) || (lchar > 3)) {
+          val.value = "";
+        }
+  
+      } else if (i == 1) {
+  
+        if (lchar.search(expr) != 0) {
+          // substring(indice1,indice2)
+          // indice1, indice2 -> será usado para delimitar a string
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+          continue;
+        }
+  
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+  
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+  
+          val.value = tst1 + '/' + tst2;
+        }
+  
+      } else if (i == 4) {
+  
+        if (lchar.search(expr) != 0) {
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+          continue;
+        }
+  
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+  
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+  
+          val.value = tst1 + '/' + tst2;
+        }
+      }
+  
+      if (i >= 6) {
+        if (lchar.search(expr) != 0) {
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+        }
+      }
+    }
+  
+    if (pass.length > 10)
+      val.value = val.value.substring(0, 10);
+    return true;
+  }

@@ -18,6 +18,7 @@ section{
     flex: 1;
     height: 100%;
     clip-path: circle(70% at 20% 50%);
+    transition: 0.2s;
 }
 
 .left-side img{
@@ -106,7 +107,11 @@ section{
 }
 
 
-
+@media (max-width: 1040px){
+    .left-side{
+        clip-path: circle(70% at 17% 50%);
+    }
+}
 @media (max-width:740px){
     .left-side{
         display: none;

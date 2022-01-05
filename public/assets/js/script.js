@@ -186,7 +186,7 @@ logoutButton.addEventListener('click', () => {
 })
 
 
-//TESTE POST
+
 
 function renderPosts(posts, currentUserProfile) {
     const feedPostArea = document.querySelector('#feed-area')
