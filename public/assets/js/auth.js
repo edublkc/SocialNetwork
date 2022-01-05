@@ -117,7 +117,7 @@ function singUP() {
 
     let allInputsAreFilled = inputsFilled.length == allRegisterInputs.length ? true : false
 
-    console.log(allInputsAreFilled)
+    
 
     if(allInputsAreFilled){
         createUserWithEmailAndPassword(auth, email, password)
@@ -179,7 +179,7 @@ function singUP() {
 
 const birthInput = document.querySelector('#register-birth')
 
-birthInput.onkeypress = function (e){
+birthInput.oninput = function (e){
     mascaraData(e.target)
 }
 

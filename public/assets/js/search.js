@@ -104,8 +104,8 @@ function renderResult(resultArray) {
                     <img src="${resultArray[i].profile.pic}">
                 </div>
                 <div class="search-result--infos">
-                    <a href="/public/profile.html?id=${resultArray[i].id}" id="search-result--infos__name">${resultArray[i].profile.name} ${resultArray[i].profile.lastName}</a>
-                    <a href="/public/profile.html?id=${resultArray[i].id}" id="search-result--infos__title">${resultArray[i].profile.title}</a>
+                    <a href="profile.html?id=${resultArray[i].id}" id="search-result--infos__name">${resultArray[i].profile.name} ${resultArray[i].profile.lastName}</a>
+                    <a href="profile.html?id=${resultArray[i].id}" id="search-result--infos__title">${resultArray[i].profile.title}</a>
                 </div>
             </div>
             `

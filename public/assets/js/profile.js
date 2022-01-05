@@ -106,7 +106,7 @@ async function readPosts(currentUserUid) {
         const storageRef = await firebase.ref(storage, `ProfilesImages/${posts[i].post.ownerId}_pic`)
         const url = await firebase.getDownloadURL(storageRef)
             .then((urlImage) => posts[i].post.pic = urlImage)
-            .catch(() => posts[i].post.pic = currentUserProfile.pic)
+            .catch(() => posts[i].post.pic = posts[i].post.pic)
 
         for (let j = 0; j < allProfiles.length; j++) {
             if (posts[i].post.ownerId == allProfiles[j].id) {
@@ -121,7 +121,7 @@ async function readPosts(currentUserUid) {
 
 
 function renderProfileInfo(currentUserProfile) {
-    console.log(currentUserProfile)
+    
 
 
 
@@ -157,7 +157,7 @@ function renderProfileInfo(currentUserProfile) {
 
         profileName.textContent = fullName
         profileTitle.textContent = currentUserProfile.title
-        profileFollowers.textContent = currentUserProfile.follower.length
+        profileFollowers.textContent = currentUserProfile.follow.length
         profileFollowing.textContent = currentUserProfile.following.length
         profileBirth.innerHTML += currentUserProfile.birth
         profileLocation.innerHTML += location
@@ -175,7 +175,7 @@ function renderProfileInfo(currentUserProfile) {
 }
 
 function renderOtherProfiles(myParam) {
-    console.log(myParam)
+    
     let currentProfile = allProfiles.filter(profile => profile.id == myParam)
 
     const fullName = currentProfile[0].profile.name + ' ' + currentProfile[0].profile.lastName
@@ -204,7 +204,7 @@ function renderOtherProfiles(myParam) {
 
     profileName.textContent = fullName
     profileTitle.textContent = currentProfile[0].profile.title
-    profileFollowers.textContent = currentProfile[0].profile.follower.length
+    profileFollowers.textContent = currentProfile[0].profile.follow.length
     profileFollowing.textContent = currentProfile[0].profile.following.length
     profileBirth.innerHTML += `<i class="fas fa-calendar-week"></i> ${currentProfile[0].profile.birth}`
     profileLocation.innerHTML += `<i class="fas fa-map-marker-alt"></i> ${location}`
@@ -212,7 +212,7 @@ function renderOtherProfiles(myParam) {
     followProfileButton.style.display = "block"
 
 
-    console.log(currentProfile)
+    
 }
 
 window.onload = () => {
@@ -250,8 +250,7 @@ editProfileButton.addEventListener('click', () => {
         allInputs[i].value = currentUserProfile[updateName[1]]
     }
 
-    const allUploadInputs = document.querySelectorAll('[data-image]')
-    console.log(allUploadInputs[0].files)
+    
     closeModal()
 })
 
@@ -336,9 +335,9 @@ async function followSomePerson() {
 
 
         const otherPersonProfileInformations = allProfiles.filter(profile => profile.id == myParam)
-        const followersOtherPerson = otherPersonProfileInformations[0].profile.follower
+        const followersOtherPerson = otherPersonProfileInformations[0].profile.follow
         const otherPersonProfileRef = doc(db, 'profiles', otherPersonProfileInformations[0].id)
-        const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follower: [...followersOtherPerson, currentUserProfile.id] })
+        const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follow: [...followersOtherPerson, currentUserProfile.id] })
 
         currentUserProfile = {}
         allProfiles = []
@@ -355,10 +354,10 @@ async function unFollowSomePerson() {
 
 
     const otherPersonProfileInformations = allProfiles.filter(profile => profile.id == myParam)
-    const followersOtherPerson = otherPersonProfileInformations[0].profile.follower
+    const followersOtherPerson = otherPersonProfileInformations[0].profile.follow
     const followersOtherPersonWithOutMyId = followersOtherPerson.filter(id => id != currentUserProfile.id)
     const otherPersonProfileRef = doc(db, 'profiles', otherPersonProfileInformations[0].id)
-    const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follower: followersOtherPersonWithOutMyId })
+    const otherPersoprofileUpdate = await updateDoc(otherPersonProfileRef, { follow: followersOtherPersonWithOutMyId })
     
     currentUserProfile = {}
     allProfiles = []
@@ -373,7 +372,7 @@ async function unFollowSomePerson() {
 function renderPosts(posts, currentUserProfile) {
     const feedPostArea = document.querySelector('#feed-area')
 
-    // console.log(posts)
+   
 
     feedPostArea.innerHTML = ''
 
@@ -397,7 +396,7 @@ function renderPosts(posts, currentUserProfile) {
                     <img src="${posts[i].post.pic}">
                 </div>
                 <div class="feed-area--infos">
-                    <a href="/public/profile.html?id=${posts[i].post.ownerId}"><span class="feed-area--infos__name">${posts[i].post.owner}</span></a>
+                    <a href="profile.html?id=${posts[i].post.ownerId}"><span class="feed-area--infos__name">${posts[i].post.owner}</span></a>
                     <span class="feed-area--infos__date">${posts[i].post.date.toDate()}</span>
                 </div>
             </div>
@@ -447,7 +446,7 @@ function renderPosts(posts, currentUserProfile) {
             </div>
             <div class="feed-area--comment__wrap">
                 <div class="feed-area--comment__user">
-                    <a href=""><span>${posts[i].post.comments[j].name}</span></a>
+                    <a href="profile.html?id=${posts[i].post.comments[j].userId}"><span>${posts[i].post.comments[j].name}</span></a>
                 </div>
                 <div class="feed-area--comment__text">
                     <p>${posts[i].post.comments[j].comment}</p>
@@ -498,7 +497,7 @@ async function systemComment(id, postId, posts, allComments) {
         }]
     })
 
-    console.log('funcionou')
+   
 
     getUser()
     //readProfileInformations(userId)
@@ -507,7 +506,7 @@ async function systemComment(id, postId, posts, allComments) {
 
 //LIKE SYSTEM
 async function renderLikes(posts, uid) {
-    console.log(posts)
+    
 
     for (let i = 0; i < posts.length; i++) {
         let likeStar = document.querySelector(`[data-ok="id-${i}"]`)
@@ -563,7 +562,7 @@ async function systemLike(postId, amountLike, uid, id) {
 
 const dataInput = document.querySelector('#register-birth')
 
-dataInput.onkeypress = (event) =>{
+dataInput.oninput = (event) =>{
     mascaraData(event.target)
 }
 

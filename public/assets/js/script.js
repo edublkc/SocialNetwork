@@ -85,7 +85,7 @@ async function readPosts(currentUserUid) {
         const storageRef = await firebase.ref(storage, `ProfilesImages/${myFriendPosts[i].post.ownerId}_pic`)
         const url = await firebase.getDownloadURL(storageRef)
             .then((urlImage) => myFriendPosts[i].post.pic = urlImage)
-            .catch(() => myFriendPosts[i].post.pic = currentUserProfile.pic)
+            .catch(() => myFriendPosts[i].post.pic = myFriendPosts[i].post.pic)
 
         for (let j = 0; j < allProfiles.length; j++) {
             if (myFriendPosts[i].post.ownerId == allProfiles[j].id) {
@@ -117,13 +117,13 @@ export async function readProfileInformations(currentUserUid) {
 
     })
 
-    console.log(allProfiles)
+    
     readPosts(currentUserUid)
     renderProfileInfo(currentUserProfile)
 }
 
 function renderProfileInfo(currentUserProfile) {
-    console.log(currentUserProfile)
+  
 
     const allImages = document.querySelectorAll('[data-src]')
     const profileCover = document.querySelector('.profile-cover')
@@ -135,7 +135,7 @@ function renderProfileInfo(currentUserProfile) {
     menuProfileName.textContent = `${currentUserProfile.name} ${currentUserProfile.lastName}`
     menuProfileTitle.textContent = `${currentUserProfile.title}`
     followingNumber.textContent = currentUserProfile.following.length
-    followerNumber.textContent = currentUserProfile.follower.length
+    followerNumber.textContent = currentUserProfile.follow.length
 
     if (currentUserProfile.cover) {
         profileCover.style.backgroundImage = `url(${currentUserProfile.cover})`
@@ -191,7 +191,7 @@ logoutButton.addEventListener('click', () => {
 function renderPosts(posts, currentUserProfile) {
     const feedPostArea = document.querySelector('#feed-area')
 
-    // console.log(posts)
+    
 
     feedPostArea.innerHTML = ''
 
@@ -215,7 +215,7 @@ function renderPosts(posts, currentUserProfile) {
                     <img src="${posts[i].post.pic}">
                 </div>
                 <div class="feed-area--infos">
-                    <a href="/public/profile.html?id=${posts[i].post.ownerId}"><span class="feed-area--infos__name">${posts[i].post.owner}</span></a>
+                    <a href="profile.html?id=${posts[i].post.ownerId}"><span class="feed-area--infos__name">${posts[i].post.owner}</span></a>
                     <span class="feed-area--infos__date">${posts[i].post.date.toDate()}</span>
                 </div>
             </div>
@@ -316,7 +316,7 @@ async function systemComment(id, postId, posts, allComments) {
         }]
     })
 
-    console.log('funcionou')
+    
 
     getUser()
     //readProfileInformations(userId)
@@ -325,7 +325,7 @@ async function systemComment(id, postId, posts, allComments) {
 
 //LIKE SYSTEM
 async function renderLikes(posts, uid) {
-    console.log(posts)
+    
 
     for (let i = 0; i < posts.length; i++) {
         let likeStar = document.querySelector(`[data-ok="id-${i}"]`)

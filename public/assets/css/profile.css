@@ -129,6 +129,8 @@ main{
     cursor: pointer;
     color: var(--white-color);
     transition: 0.2s;
+    margin-left: 10px;
+    font-size: 12px;
 }
 
 .profile-body--about__info.edit .profile-button:hover{
@@ -209,3 +211,4 @@ main{
     }
     
 }
+

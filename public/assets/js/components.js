@@ -12,9 +12,9 @@ export function header(){
             </div>
             <div class="line"></div>
             <ul>
-            <li><a href="/public/index.html"><i class="fas fa-home"></i> Início</a></li>
-                <li><a href="/public/profile.html"><i class="fas fa-user-alt"></i> Meu Perfil</a></li>
-                <li><a id="logout-button" href="/public/login.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-alt"></i> Meu Perfil</a></li>
+                <li><a id="logout-button" href="login.html"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </div>
     </div>
@@ -45,8 +45,8 @@ export function header(){
 
                 <div class="menu-profile--dropdown">
                     <ul>
-                        <li><a href="/public/profile.html">Meu Perfil</a></li>
-                        <li><a id="logout-button" href="/public/login.html">Sair</a></li>
+                        <li><a href="profile.html">Meu Perfil</a></li>
+                        <li><a id="logout-button" href="login.html">Sair</a></li>
                     </ul>
                 </div>
             </div>
@@ -110,7 +110,7 @@ function search(event){
         const searchInput = document.querySelector('#search-input').value.trim()
         const searchButton = document.querySelector('#search-button')
         
-        searchButton.href = `/public/search.html?search=${searchInput}`
+        searchButton.href = `search.html?search=${searchInput}`
     }else{
         event.preventDefault()
     }
