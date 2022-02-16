@@ -10,4 +10,131 @@
     --black-color: #282940;
     --primary-color: #F24B6A;
     --secundary-color: #A62479;
+    --bg-color: #F0F2F5;
+    --white-color: #ffffff;
+    --border-color: #ccc;
+    --post-text-color: #333333;
+
+    --bt-green-color:#42b72a;
+    --bt-green-color-hover:#36a420;
 }
+
+.line{
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 5px 0;
+}
+
+.link{
+    text-decoration: none;
+    margin: 0 auto;
+    color: var(--primary-color);
+}
+
+.self-center{
+    align-self: center;
+}
+
+/*Modal*/
+.modal{
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100vh;
+    z-index: 99999;
+    display: none;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.5;
+    overflow-y: auto;
+}
+
+.modal.openned{
+    opacity: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.modal.openned-big{
+    opacity: 100%;
+    display: flex;
+    
+}
+
+.modal-body{
+    max-width: 300px;
+    width: 100%;
+    background-color: var(--white-color);
+    padding: 10px;
+    border-radius:10px;
+    height: fit-content;
+}
+
+.modal-body.big{
+    margin:60px 0;
+    max-width: 500px;
+}
+
+.modal-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.modal-title{
+    font-size: 18px;
+    color: var(--black-color);
+    font-weight: 700;
+    
+}
+
+.message-info-modal{
+    display: none;
+    color: red;
+}
+
+.modal-close-btn{
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modal-close-btn:hover{
+    color: var(--post-text-color);
+}
+
+.modal-content{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/*BUTTONS*/
+.bt{
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white-color);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 250px;
+    height: 35px;
+    transition: 0.4s;
+}
+
+.bt:hover{
+    background-color: var(--secundary-color);
+}
+
+.bt.green{
+    background-color: var(--bt-green-color);
+}
+
+.bt.bt.green:hover{
+    background-color: var(--bt-green-color-hover);
+}
+
